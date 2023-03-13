@@ -2,18 +2,15 @@ package main
 
 import (
 	"os"
-	"time"
 
-	apiRouter "github.com/alexkalak/pony_express/src/Routes/api"
-	currencyhelper "github.com/alexkalak/pony_express/src/currencyHelper"
-	"github.com/alexkalak/pony_express/src/db"
+	apiRouter "github.com/alexkalak/pony_express-calculator/src/Routes/api"
+	"github.com/alexkalak/pony_express-calculator/src/db"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
 	db.Init()
-	go currencyhelper.StartGettingCurrencies(time.Hour * 24)
 
 	app := fiber.New()
 

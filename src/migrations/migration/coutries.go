@@ -3,8 +3,8 @@ package migration
 import (
 	"strconv"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func MigrateCountries() {
@@ -13,7 +13,7 @@ func MigrateCountries() {
 
 	for _, entity := range array {
 		SaveIfNotExistsCountryCode(entity[1])
-		SaveIfNotExistsCountry(entity[0], entity[1], entity[2])
+		SaveIfNotExistsCountry(entity[0], entity[3], entity[1], entity[2])
 	}
 }
 
@@ -28,7 +28,7 @@ func SaveIfNotExistsCountryCode(code string) {
 	}
 }
 
-func SaveIfNotExistsCountry(countryName string, code string, regionID string) {
+func SaveIfNotExistsCountry(countryName string, countryTrName string, code string, regionID string) {
 	database := db.GetDB()
 
 	countryCode := models.CountryCode{}
@@ -42,6 +42,7 @@ func SaveIfNotExistsCountry(countryName string, code string, regionID string) {
 
 	country.CountryCode = countryCode
 	country.Name = countryName
+	country.TrName = countryTrName
 	if regionID != "" {
 		intRegID, err := strconv.Atoi(regionID)
 		if err != nil {

@@ -5,14 +5,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func GetCityByName(name string) (*models.City, error) {
 	database := db.GetDB()
 	var city models.City
-	res := database.Model(&models.City{}).Preload("District.Area").Where("name = ?", name).First(&city)
+	res := database.Model(&models.City{}).Preload("District.Area").Where("name = ? OR tr_name = ?", name, name).First(&city)
 	if res.Error != nil {
 		return nil, res.Error
 	}
@@ -24,7 +24,6 @@ func GetCityByCityNameCountryDistrictAndArea(name string, countryName, districtN
 	database := db.GetDB()
 
 	conditions := make([]string, 0, 4)
-	conditions = append(conditions, fmt.Sprintf("name = '%s'", name))
 
 	areaFromDB, err := GetAreaByName(areaName)
 	if err != nil {
@@ -68,7 +67,7 @@ func GetCityByCityNameCountryDistrictAndArea(name string, countryName, districtN
 		Preload("District").
 		Preload("Area").
 		Where(queryConditionsStr).
-		First(&city)
+		First(&city, "name = ? OR tr_name = ?", name, name)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -103,8 +102,8 @@ func GetCityByCityNameCountryAndArea(name string, countryName string, areaName s
 	res := database.
 		Model(&models.City{}).
 		Preload("District.Area").
-		Where("name = ? AND county_id and area_id = ?", name, country_id, areaID).
-		First(&city)
+		Where("county_id and area_id = ?", country_id, areaID).
+		First(&city, "name = ? OR tr_name = ?", name, name)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -116,7 +115,7 @@ func GetCityByCityNameCountryAndArea(name string, countryName string, areaName s
 func GetSenderCityByName(name string) (*models.SenderCity, error) {
 	database := db.GetDB()
 	var senderCity models.SenderCity
-	res := database.First(&senderCity, "name = ?", name)
+	res := database.First(&senderCity, "name = ? OR tr_name = ?", name)
 	if res.Error != nil {
 		return nil, res.Error
 	}
@@ -132,7 +131,7 @@ func GetAreaByName(name string) (*models.Area, error) {
 	}
 
 	var area models.Area
-	res := database.First(&area, "name = ?", name)
+	res := database.First(&area, "name = ? OR tr_name = ?", name, name)
 	if res.Error != nil {
 		return nil, res.Error
 	}
@@ -162,7 +161,7 @@ func GetDistrictByNameAndArea(name string, areaName string) (*models.District, e
 	var district models.District
 	res := database.
 		Where(condition).
-		First(&district, "name = ?", name)
+		First(&district, "name = ? OR tr_name = ?", name, name)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -178,7 +177,7 @@ func GetCountryByName(name string) (*models.Country, error) {
 	}
 
 	var country models.Country
-	res := database.First(&country, "name = ?", name)
+	res := database.First(&country, "name = ? OR tr_name = ?", name, name)
 	if res.Error != nil {
 		return nil, res.Error
 	}

@@ -3,7 +3,7 @@ package validation
 import (
 	"regexp"
 
-	"github.com/alexkalak/pony_express/src/types"
+	"github.com/alexkalak/pony_express-calculator/src/types"
 	"github.com/go-playground/validator/v10"
 )
 

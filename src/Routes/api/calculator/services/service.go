@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/alexkalak/pony_express/src/Routes/validation"
-	currencyhelper "github.com/alexkalak/pony_express/src/currencyHelper"
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/helpers/city_helper"
-	"github.com/alexkalak/pony_express/src/helpers/package_types_helper"
-	"github.com/alexkalak/pony_express/src/models"
-	"github.com/alexkalak/pony_express/src/types"
+	"github.com/alexkalak/pony_express-calculator/src/Routes/validation"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/helpers/city_helper"
+	currencyhelper "github.com/alexkalak/pony_express-calculator/src/helpers/currencyHelper"
+	"github.com/alexkalak/pony_express-calculator/src/helpers/package_types_helper"
+	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/types"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -58,7 +58,7 @@ func (cs *calculatorService) Calculate(c *fiber.Ctx) (*ResponsePrices, bool, []*
 
 	//Finding sender region and city
 	var senderRegionFromDB models.SenderRegion
-	res := database.Preload("SenderCity").First(&senderRegionFromDB, "name = ?", reqBody.SenderRegion)
+	res := database.Preload("SenderCity").First(&senderRegionFromDB, "name = ? OR tr_name = ?", reqBody.SenderRegion, reqBody.SenderRegion)
 	if res.Error != nil {
 		return nil, false, nil, fmt.Errorf("sender-city not found")
 	}
@@ -154,7 +154,7 @@ func getRegionID(c *fiber.Ctx) (int, error) {
 	}
 
 	var country *models.Country
-	res := database.First(&country, "name = ?", usrInput.ReceiverCountry)
+	res := database.First(&country, "name = ? or tr_name = ?", usrInput.ReceiverCountry, usrInput.ReceiverCountry)
 	if res.Error != nil {
 		return 0, fmt.Errorf("country not found")
 	}

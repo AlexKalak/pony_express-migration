@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/helpers/city_helper"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/helpers/city_helper"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 // var length = 0

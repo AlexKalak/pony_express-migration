@@ -3,8 +3,8 @@ package region_helper
 import (
 	"fmt"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func GetRegionByID(id int) (*models.Region, error) {

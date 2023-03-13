@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

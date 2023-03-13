@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/helpers/price_helper"
-	"github.com/alexkalak/pony_express/src/helpers/weights_helper"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/helpers/price_helper"
+	"github.com/alexkalak/pony_express-calculator/src/helpers/weights_helper"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func GetPrice(weight float64, regionID int, packageTypeID int, packageType string, senderCityID int) (int, error) {

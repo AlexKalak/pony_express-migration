@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
-	"github.com/alexkalak/pony_express/src/Routes/api/calculator/services"
+	"github.com/alexkalak/pony_express-calculator/src/Routes/api/calculator/services"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -14,6 +16,9 @@ func CalculatorController(router fiber.Router) {
 }
 
 func calculate(c *fiber.Ctx) error {
+	fmt.Println("Time: ", time.Now().Format("January 2, 2006 - Mon"))
+	fmt.Println("IP: ", c.IP())
+
 	prices, usedVolumeWeights, validationErrors, err := CalculatorService.Calculate(c)
 	if err != nil {
 		c.SendStatus(http.StatusInternalServerError)

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/migrations/migration"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/migrations/migration"
 )
 
 func main() {

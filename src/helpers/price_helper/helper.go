@@ -3,8 +3,8 @@ package price_helper
 import (
 	"errors"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func GetPriceFromDB(regionID int, packageTypeID int, weightID int, senderCityID int) (*models.Price, error) {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/alexkalak/pony_express/src/db"
-	"github.com/alexkalak/pony_express/src/models"
+	"github.com/alexkalak/pony_express-calculator/src/db"
+	"github.com/alexkalak/pony_express-calculator/src/models"
 )
 
 func MigrateCities() {
@@ -14,9 +14,9 @@ func MigrateCities() {
 	var RussiaFromDB models.Country
 	var MoldovaFromDB models.Country
 	var UkraineFromDB models.Country
-	database.Find(&RussiaFromDB, "name = ?", "Rusya")
-	database.Find(&MoldovaFromDB, "name = ?", "Moldova")
-	database.Find(&UkraineFromDB, "name = ?", "Ukrayna")
+	database.Find(&RussiaFromDB, "name = ?", "Россия")
+	database.Find(&MoldovaFromDB, "name = ?", "Молдова")
+	database.Find(&UkraineFromDB, "name = ?", "Украина")
 
 	MigrateSenderCities()
 	MigrateSenderRegions()
@@ -34,68 +34,55 @@ func MigrateSenderRegions() {
 	var Istanbul models.SenderCity
 	var Antalya models.SenderCity
 
-	res := database.Find(&Istanbul, "name = ?", "Istanbul")
+	res := database.Find(&Istanbul, "tr_name = ?", "Istanbul")
 	if res.Error != nil {
 		panic(res.Error)
 	}
-	res = database.Find(&Antalya, "name = ?", "Antalya")
+	res = database.Find(&Antalya, "tr_name = ?", "Antalya")
 	if res.Error != nil {
 		panic(res.Error)
 	}
 
-	AsianIstanbulReg1 := models.SenderRegion{
+	AsianIstanbulReg := models.SenderRegion{
 		Name:         "Азиатская часть Стамбула",
+		TrName:       "Istanbul'un Asya yakası",
 		PriceForDoor: 2700,
 		SenderCity:   Istanbul,
 	}
-	EuropeIstanbulReg1 := models.SenderRegion{
+	EuropeIstanbulReg := models.SenderRegion{
 		Name:         "Европейская часть Стамбула",
+		TrName:       "İstanbul'un Avrupa yakası",
 		PriceForDoor: 1600,
 		SenderCity:   Istanbul,
 	}
-	AsianIstanbulReg2 := models.SenderRegion{
-		Name:         "Asian part of Istanbul",
-		PriceForDoor: 2700,
-		SenderCity:   Istanbul,
-	}
-	EuropeIstanbulReg2 := models.SenderRegion{
-		Name:         "Europe part of Istanbul",
-		PriceForDoor: 1600,
-		SenderCity:   Istanbul,
-	}
-	AntalyaReg1 := models.SenderRegion{
+	AntalyaReg := models.SenderRegion{
 		Name:         "Анталия",
-		PriceForDoor: 1100,
-		SenderCity:   Antalya,
-	}
-	AntalyaReg2 := models.SenderRegion{
-		Name:         "Antalya",
+		TrName:       "Antalya",
 		PriceForDoor: 1100,
 		SenderCity:   Antalya,
 	}
 
-	database.Create(&AsianIstanbulReg1)
-	database.Create(&EuropeIstanbulReg1)
-	database.Create(&AntalyaReg1)
-	database.Create(&AsianIstanbulReg2)
-	database.Create(&EuropeIstanbulReg2)
-	database.Create(&AntalyaReg2)
+	database.Create(&AsianIstanbulReg)
+	database.Create(&EuropeIstanbulReg)
+	database.Create(&AntalyaReg)
 }
 
 func MigrateSenderCities() {
 	database := db.GetDB()
 	Istanbul := models.SenderCity{
-		Name: "Istanbul",
+		Name:   "Стамбул",
+		TrName: "Istanbul",
 	}
 	Antalya := models.SenderCity{
-		Name: "Antalya",
+		Name:   "Анталия",
+		TrName: "Antalya",
 	}
 
 	database.Create(&Istanbul)
 	database.Create(&Antalya)
 }
 
-// ///////////////////////////// CountryCities ///////////////////////////////////////////////////
+// ///////////////////////////// Areas ///////////////////////////////////////////////////
 func MigrateRussiaAreas(countryFromDB *models.Country) {
 	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/country_cities.csv")
 
@@ -105,8 +92,9 @@ func MigrateRussiaAreas(countryFromDB *models.Country) {
 			panic(err)
 		}
 		areaName := entity[2]
+		areaTrName := entity[3]
 
-		SaveArea(id, areaName, countryFromDB)
+		SaveArea(id, areaName, areaTrName, countryFromDB)
 	}
 }
 
@@ -119,23 +107,26 @@ func MigrateMoldovaAreas(countryFromDB *models.Country) {
 			panic(err)
 		}
 		areaName := entity[2]
+		areaTrName := entity[3]
 
-		SaveArea(id, areaName, countryFromDB)
+		SaveArea(id, areaName, areaTrName, countryFromDB)
 	}
 }
 
-func SaveArea(id int, areaName string, countryFromDB *models.Country) {
+func SaveArea(id int, areaName string, trName string, countryFromDB *models.Country) {
 	database := db.GetDB()
 	area := models.Area{
-		ID:      id,
-		Name:    areaName,
+		ID:     id,
+		Name:   areaName,
+		TrName: trName,
+
 		Country: *countryFromDB,
 	}
 
 	database.Save(&area)
 }
 
-// //////////////////////////// Cities and big and small ///////////////////////////////////////////
+// //////////////////////////// Districts ///////////////////////////////////////////
 func MigrateDistricts(countryFromDB *models.Country) {
 	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/districts.csv")
 
@@ -149,30 +140,33 @@ func MigrateDistricts(countryFromDB *models.Country) {
 			panic(err)
 		}
 		districtName := entity[2]
+		districtTrName := entity[3]
 
-		SaveDistrict(id, districtName, areaID)
+		SaveDistrict(id, districtName, districtTrName, areaID)
 		// SaveDistrict(districtName, areaID)
 	}
 }
 
-func SaveDistrict(id int, districtName string, areaID int) {
+func SaveDistrict(id int, districtName string, districtTrName string, areaID int) {
 	// func SaveDistrict(districtName string, areaID int) {
 	database := db.GetDB()
 	area := models.District{
 		ID:     id,
 		Name:   districtName,
+		TrName: districtTrName,
 		AreaID: areaID,
 	}
 
 	database.Save(&area)
 }
 
+// //////////////////////////// Cities and big and small ///////////////////////////////////////////
 func MigrateRussianCities(countryFromDB *models.Country) {
 	arrAllCities := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/city_places.csv")
 	arrBigCities := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/russia-big-cities.csv")
 
-	SaveIfNotExistCity("Москва", 15, countryFromDB, nil, nil)
-	SaveIfNotExistCity("Санкт-Петербург", 15, countryFromDB, nil, nil)
+	SaveIfNotExistCity("Москва", "Moskva", 15, countryFromDB, nil, nil)
+	SaveIfNotExistCity("Санкт-Петербург", "Sankt-Peterburg", 15, countryFromDB, nil, nil)
 
 	for _, entity := range arrAllCities {
 		if entity[0] != "180" {
@@ -180,6 +174,7 @@ func MigrateRussianCities(countryFromDB *models.Country) {
 		}
 
 		cityName := entity[4]
+		cityTrName := entity[5]
 
 		regionID := 17
 		if BigCityContains(arrBigCities, cityName) {
@@ -199,7 +194,7 @@ func MigrateRussianCities(countryFromDB *models.Country) {
 		}
 
 		if entity[3] == "" {
-			SaveIfNotExistCity(cityName, regionID, countryFromDB, nil, &areaID)
+			SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, nil, &areaID)
 			continue
 		}
 
@@ -208,9 +203,10 @@ func MigrateRussianCities(countryFromDB *models.Country) {
 			panic(err)
 		}
 
-		SaveIfNotExistCity(cityName, regionID, countryFromDB, &districtID, &areaID)
+		SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, &districtID, &areaID)
 	}
 }
+
 func MigrateMoldovaCities(countryFromDB *models.Country) {
 	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/moldova/cities.csv")
 
@@ -222,10 +218,13 @@ func MigrateMoldovaCities(countryFromDB *models.Country) {
 			panic(err)
 		}
 
+		cityName := entity[0]
+		cityTrName := entity[3]
+
 		if area_id != 0 {
-			SaveIfNotExistCity(entity[0], regionID, countryFromDB, nil, &area_id)
+			SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, nil, &area_id)
 		} else {
-			SaveIfNotExistCity(entity[0], regionID, countryFromDB, nil, nil)
+			SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, nil, nil)
 		}
 	}
 }
@@ -236,11 +235,15 @@ func MigrateUkraineCities(countryFromDB *models.Country) {
 	for _, entity := range arr {
 		l_reg_id, _ := strconv.Atoi(entity[1])
 		regionID := l_reg_id + 21
-		SaveIfNotExistCity(entity[0], regionID, countryFromDB, nil, nil)
+
+		cityName := entity[0]
+		cityTrName := entity[2]
+
+		SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, nil, nil)
 	}
 }
 
-func SaveIfNotExistCity(cityName string, regionID int, countryFromDB *models.Country, DistrictID *int, areaID *int) {
+func SaveIfNotExistCity(cityName string, cityTrName string, regionID int, countryFromDB *models.Country, DistrictID *int, areaID *int) {
 	fmt.Println(cityName)
 	database := db.GetDB()
 	var city models.City
@@ -250,6 +253,7 @@ func SaveIfNotExistCity(cityName string, regionID int, countryFromDB *models.Cou
 	}
 
 	city.Name = cityName
+	city.TrName = cityTrName
 	city.Country = *countryFromDB
 	city.Region.ID = regionID
 	city.DistrictID = DistrictID

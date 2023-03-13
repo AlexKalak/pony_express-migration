@@ -1,4 +1,4 @@
-module github.com/alexkalak/pony_express
+module github.com/alexkalak/pony_express-calculator
 
 go 1.19
 
