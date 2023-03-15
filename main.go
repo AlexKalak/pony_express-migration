@@ -28,5 +28,5 @@ func main() {
 	}
 	app.Route("/api", apiRouter.ApiRouter)
 
-	app.Listen("0.0.0.0:" + port)
+	app.Listen("0.0.0.0" + ":" + port)
 }
