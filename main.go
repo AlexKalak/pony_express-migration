@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	apiRouter "github.com/alexkalak/pony_express-calculator/src/Routes/api"
@@ -22,11 +23,13 @@ func main() {
 	})
 
 	port := os.Getenv("PORT")
-
+	fmt.Println("port: ", port)
 	if port == "" {
-		port = "9999"
+		port = "80"
 	}
 	app.Route("/api", apiRouter.ApiRouter)
 
-	app.Listen("0.0.0.0" + ":" + port)
+	app.Listen(":" + port)
+	fmt.Println(app)
+	fmt.Println("end")
 }

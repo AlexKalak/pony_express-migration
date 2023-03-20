@@ -187,10 +187,10 @@ func AddPricesOverMaxWeights(path string, packageType string, senderCityFromDB *
 			// str, _ := json.MarshalIndent(priceEntity, "", "\t")
 			// fmt.Println(string(str))
 
-			exists := isOverPriceInDB(priceEntity.WeightID, priceEntity.PackageTypeID, priceEntity.RegionID)
-			if exists {
-				continue
-			}
+			// exists := isOverPriceInDB(priceEntity.WeightID, priceEntity.PackageTypeID, priceEntity.RegionID)
+			// if exists {
+			// 	continue
+			// }
 
 			database.Create(&priceEntity)
 		}

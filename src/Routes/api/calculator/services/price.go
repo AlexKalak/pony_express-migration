@@ -43,9 +43,12 @@ func GetPrice(weight float64, regionID int, packageTypeID int, packageType strin
 	}
 
 	overPrice, hasOverPrice := GetOverPrice(regionID, packageTypeID, senderCityID)
+	fmt.Println("has over price")
 	if !hasOverPrice {
+		fmt.Println("Using reminder")
 		return GetPriceUsingMaxWeightAndReminder(weight, maxWeight, maxPriceFromDB, senderCityID)
 	} else {
+		fmt.Println("Using over price")
 		return GetPriceUsingOverPrice(weight, maxWeight, overPrice, maxPriceFromDB)
 	}
 
@@ -69,16 +72,15 @@ func GetPriceUsingMaxWeightAndReminder(weight float64, maxWeight float64, maxPri
 }
 
 func GetPriceUsingOverPrice(weight float64, maxWeight float64, overPrice *models.PriceOverMaxWeight, maxPriceFromDB *models.Price) (int, error) {
-	numOfMaxWeights := int(weight / maxWeight)
-	reminder := weight - float64(numOfMaxWeights)*maxWeight
+	reminder := weight - maxWeight
 	numOfOverPrices := int(math.Round(reminder / overPrice.Weight.Weight))
 
-	fmt.Println("num of max weights: ", numOfMaxWeights)
+	fmt.Println("max weight: ", maxWeight)
 	fmt.Println("num of over prices: ", numOfOverPrices)
 
 	//Finding price for max weight in db
 
-	price := numOfMaxWeights * maxPriceFromDB.Price
+	price := maxPriceFromDB.Price
 	price += overPrice.Price * numOfOverPrices
 
 	return price, nil

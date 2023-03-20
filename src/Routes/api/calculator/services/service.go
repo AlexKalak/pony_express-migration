@@ -81,7 +81,7 @@ func (cs *calculatorService) Calculate(c *fiber.Ctx) (*ResponsePrices, bool, []*
 	if err != nil {
 		return nil, false, nil, err
 	}
-
+	fmt.Println("Sender city id = ", senderCityFromDB.ID)
 	price, err := GetPrice(weight, receiverRegionID, packageTypeFromDB.ID, packageTypeFromDB.Name, senderCityFromDB.ID)
 	if err != nil {
 		return nil, false, nil, err
@@ -177,9 +177,9 @@ func getRegionID(c *fiber.Ctx) (int, error) {
 
 	//Checking if receiver area is Moscow of Saint_Petersburg
 	switch receiverCityFromDB.Area.Name {
-	case "Московская":
+	case "Московская", "Москва":
 		receiverCityFromDB, err = city_helper.GetCityByName("Москва")
-	case "Ленинградская":
+	case "Ленинградская", "Санкт-Петербург":
 		receiverCityFromDB, err = city_helper.GetCityByName("Санкт-Петербург")
 	}
 	if err != nil {

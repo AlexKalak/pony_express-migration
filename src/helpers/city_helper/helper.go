@@ -115,7 +115,7 @@ func GetCityByCityNameCountryAndArea(name string, countryName string, areaName s
 func GetSenderCityByName(name string) (*models.SenderCity, error) {
 	database := db.GetDB()
 	var senderCity models.SenderCity
-	res := database.First(&senderCity, "name = ? OR tr_name = ?", name)
+	res := database.First(&senderCity, "name = ? OR tr_name = ?", name, name)
 	if res.Error != nil {
 		return nil, res.Error
 	}

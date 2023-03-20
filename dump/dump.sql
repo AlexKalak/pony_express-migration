@@ -3,7 +3,6 @@
 -- Host: localhost    Database: pony_express_dev
 -- ------------------------------------------------------
 -- Server version	8.0.32-0ubuntu0.22.10.2
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -24,8 +23,8 @@ DROP TABLE IF EXISTS `areas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `areas` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `country_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_areas_country` (`country_id`),
@@ -52,8 +51,8 @@ DROP TABLE IF EXISTS `cities`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cities` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `region_id` bigint DEFAULT NULL,
   `country_id` bigint DEFAULT NULL,
   `district_id` bigint DEFAULT NULL,
@@ -90,8 +89,8 @@ DROP TABLE IF EXISTS `countries`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `countries` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `country_code_id` bigint NOT NULL,
   `region_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -119,9 +118,9 @@ DROP TABLE IF EXISTS `country_codes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `country_codes` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `code` varchar(3) COLLATE utf8mb4_bin NOT NULL,
+  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +129,7 @@ CREATE TABLE `country_codes` (
 
 LOCK TABLES `country_codes` WRITE;
 /*!40000 ALTER TABLE `country_codes` DISABLE KEYS */;
-INSERT INTO `country_codes` VALUES (1,'US'),(2,'AF'),(3,'DE'),(4,'AS'),(5,'AD'),(6,'AO'),(7,'AI'),(8,'AG'),(9,'AR'),(10,'AL'),(11,'AW'),(12,'AU'),(13,'AT'),(14,'AZ'),(15,'BS'),(16,'BH'),(17,'BD'),(18,'BB'),(19,'BE'),(20,'BZ'),(21,'BJ'),(22,'BM'),(23,'BY'),(24,'BT'),(25,'AE'),(26,'BO'),(27,'BQ'),(28,'BA'),(29,'BW'),(30,'BR'),(31,'BN'),(32,'BG'),(33,'BF'),(34,'BI'),(35,'KY'),(36,'GI'),(37,'DZ'),(38,'CX'),(39,'DJ'),(40,'CC'),(41,'CK'),(42,'CW'),(43,'TD'),(44,'CZ'),(45,'CN'),(46,'DK'),(47,'TL'),(48,'DO'),(49,'DM'),(50,'EC'),(51,'GQ'),(52,'SV'),(53,'ID'),(54,'ER'),(55,'AM'),(56,'EE'),(57,'ET'),(58,'FO'),(59,'MA'),(60,'FJ'),(61,'CI'),(62,'PH'),(63,'PS'),(64,'FI'),(65,'FR'),(66,'GF'),(67,'PF'),(68,'GA'),(69,'GM'),(70,'GH'),(71,'GN'),(72,'GW'),(73,'GD'),(74,'GL'),(75,'GP'),(76,'GU'),(77,'GT'),(78,'GY'),(79,'ZA'),(80,'KR'),(81,'GE'),(82,'HT'),(83,'HR'),(84,'IN'),(85,'NL'),(86,'HN'),(87,'HK'),(88,'IQ'),(89,'VG'),(90,'GB'),(91,'IE'),(92,'ES'),(93,'IL'),(94,'SE'),(95,'CH'),(96,'IT'),(97,'IS'),(98,'JM'),(99,'JP'),(100,'KH'),(101,'CM'),(102,'CA'),(103,'ME'),(104,'QA'),(105,'KZ'),(106,'KE'),(107,'CY'),(108,'KG'),(109,'KI'),(110,'CO'),(111,'CD'),(112,'CG'),(113,'YK'),(114,'CR'),(115,'KW'),(116,'MP'),(117,'CU'),(118,'LA'),(119,'LS'),(120,'LV'),(121,'LR'),(122,'LY'),(123,'LI'),(124,'LT'),(125,'LB'),(126,'LU'),(127,'HU'),(128,'MG'),(129,'MO'),(130,'MK'),(131,'MW'),(132,'MV'),(133,'MY'),(134,'ML'),(135,'MT'),(136,'MH'),(137,'MQ'),(138,'MU'),(139,'YT'),(140,'MX'),(141,'EG'),(142,'FM'),(143,'MN'),(144,'MC'),(145,'MS'),(146,'MR'),(147,'MZ'),(148,'MM'),(149,'NA'),(150,'NR'),(151,'NP'),(152,'NE'),(153,'NG'),(154,'NI'),(155,'NF'),(156,'NO'),(157,'CF'),(158,'UZ'),(159,'PK'),(160,'PW'),(161,'PA'),(162,'PG'),(163,'PY'),(164,'PE'),(165,'PL'),(166,'PT'),(167,'PR'),(168,'RE'),(169,'RO'),(170,'RW'),(171,'BL'),(172,'KN'),(173,'LC'),(174,'MF'),(175,'PM'),(176,'VC'),(177,'WS'),(178,'SM'),(179,'ST'),(180,'SN'),(181,'SC'),(182,'RS'),(183,'SL'),(184,'SG'),(185,'SX'),(186,'SK'),(187,'SI'),(188,'SB'),(189,'LK'),(190,'SR'),(191,'SA'),(192,'SZ'),(193,'CL'),(194,'TJ'),(195,'TZ'),(196,'TH'),(197,'TW'),(198,'TG'),(199,'TO'),(200,'TT'),(201,'TN'),(202,'TC'),(203,'TV'),(204,'TM'),(205,'UG'),(206,'OM'),(207,'UY'),(208,'JO'),(209,'VU'),(210,'VA'),(211,'VE'),(212,'VN'),(213,'VI'),(214,'WF'),(215,'NC'),(216,'NZ'),(217,'CV'),(218,'GR'),(219,'ZM'),(220,'ZW'),(221,'RU'),(222,'MD'),(223,'UA');
+INSERT INTO `country_codes` VALUES (1,'US'),(2,'AF'),(3,'DE'),(4,'AS'),(5,'AD'),(6,'AO'),(7,'AI'),(8,'AG'),(9,'AR'),(10,'AL'),(11,'AW'),(12,'AU'),(13,'AT'),(14,'AZ'),(15,'BS'),(16,'BH'),(17,'BD'),(18,'BB'),(19,'BE'),(20,'BZ'),(21,'BJ'),(22,'BM'),(23,'BY'),(24,'BT'),(25,'AE'),(26,'BO'),(27,'BQ'),(28,'BA'),(29,'BW'),(30,'BR'),(31,'BN'),(32,'BG'),(33,'BF'),(34,'BI'),(35,'KY'),(36,'GI'),(37,'DZ'),(38,'CX'),(39,'DJ'),(40,'CC'),(41,'CK'),(42,'CW'),(43,'TD'),(44,'CZ'),(45,'CN'),(46,'DK'),(47,'TL'),(48,'DO'),(49,'DM'),(50,'EC'),(51,'GQ'),(52,'SV'),(53,'ID'),(54,'ER'),(55,'AM'),(56,'EE'),(57,'ET'),(58,'FO'),(59,'MA'),(60,'FJ'),(61,'CI'),(62,'PH'),(63,'PS'),(64,'FI'),(65,'FR'),(66,'GF'),(67,'PF'),(68,'GA'),(69,'GM'),(70,'GH'),(71,'GN'),(72,'GW'),(73,'GD'),(74,'GL'),(75,'GP'),(76,'GU'),(77,'GT'),(78,'GY'),(79,'ZA'),(80,'KR'),(81,'GE'),(82,'HT'),(83,'HR'),(84,'IN'),(85,'NL'),(86,'HN'),(87,'HK'),(88,'IQ'),(89,'VG'),(90,'GB'),(91,'IE'),(92,'ES'),(93,'IL'),(94,'SE'),(95,'CH'),(96,'IT'),(97,'IS'),(98,'JM'),(99,'JP'),(100,'KH'),(101,'CM'),(102,'CA'),(103,'ME'),(104,'QA'),(105,'KZ'),(106,'KE'),(107,'CY'),(108,'KG'),(109,'KI'),(110,'CO'),(111,'CD'),(112,'CG'),(113,'YK'),(114,'CR'),(115,'KW'),(116,'MP'),(117,'CU'),(118,'LA'),(119,'LS'),(120,'LV'),(121,'LR'),(122,'LY'),(123,'LI'),(124,'LT'),(125,'LB'),(126,'LU'),(127,'HU'),(128,'MG'),(129,'MO'),(130,'MK'),(131,'MW'),(132,'MV'),(133,'MY'),(134,'ML'),(135,'MT'),(136,'MH'),(137,'MQ'),(138,'MU'),(139,'YT'),(140,'MX'),(141,'EG'),(142,'FM'),(143,'MN'),(144,'MC'),(145,'MS'),(146,'MR'),(147,'MZ'),(148,'MM'),(149,'NA'),(150,'NR'),(151,'NP'),(152,'NE'),(153,'NG'),(154,'NI'),(155,'NF'),(156,'NO'),(157,'CF'),(158,'UZ'),(159,'PK'),(160,'PW'),(161,'PA'),(162,'PG'),(163,'PY'),(164,'PE'),(165,'PL'),(166,'PT'),(167,'PR'),(168,'RE'),(169,'RO'),(170,'RW'),(171,'BL'),(172,'KN'),(173,'LC'),(174,'MF'),(175,'PM'),(176,'VC'),(177,'WS'),(178,'SM'),(179,'ST'),(180,'SN'),(181,'SC'),(182,'RS'),(183,'SL'),(184,'SG'),(185,'SX'),(186,'SK'),(187,'SI'),(188,'SB'),(189,'LK'),(190,'SR'),(191,'SA'),(192,'SZ'),(193,'CL'),(194,'TJ'),(195,'TZ'),(196,'TH'),(197,'TW'),(198,'TG'),(199,'TO'),(200,'TT'),(201,'TN'),(202,'TC'),(203,'TV'),(204,'TM'),(205,'UG'),(206,'OM'),(207,'UY'),(208,'JO'),(209,'VU'),(210,'VA'),(211,'VE'),(212,'VN'),(213,'VI'),(214,'WF'),(215,'NC'),(216,'NZ'),(217,'CV'),(218,'GR'),(219,'ZM'),(220,'ZW'),(221,'RU'),(222,'MD'),(223,'UA'),(224,'TR');
 /*!40000 ALTER TABLE `country_codes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,8 +166,8 @@ DROP TABLE IF EXISTS `districts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `districts` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `area_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_districts_area` (`area_id`),
@@ -233,7 +232,7 @@ CREATE TABLE `price_over_max_weights` (
   CONSTRAINT `fk_price_over_max_weights_region` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`),
   CONSTRAINT `fk_price_over_max_weights_sender_city` FOREIGN KEY (`sender_city_id`) REFERENCES `sender_cities` (`id`),
   CONSTRAINT `fk_price_over_max_weights_weight` FOREIGN KEY (`weight_id`) REFERENCES `weights` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +241,7 @@ CREATE TABLE `price_over_max_weights` (
 
 LOCK TABLES `price_over_max_weights` WRITE;
 /*!40000 ALTER TABLE `price_over_max_weights` DISABLE KEYS */;
-INSERT INTO `price_over_max_weights` VALUES (1,2,1,15,2,2500),(2,2,1,16,2,2500),(3,2,1,17,2,2500),(4,4,3,15,2,1195),(5,4,3,16,2,1435),(6,4,3,17,2,1675),(7,2,2,15,2,559),(8,2,2,16,2,738),(9,2,2,17,2,939),(10,4,1,18,2,2700),(11,4,1,19,2,3000),(12,4,1,20,2,3000),(13,4,1,21,2,3200),(14,4,2,22,2,895),(15,4,2,23,2,1435),(16,4,3,22,2,1195),(17,4,3,23,2,1435);
+INSERT INTO `price_over_max_weights` VALUES (1,2,1,15,2,2500),(2,2,1,16,2,2500),(3,2,1,17,2,2500),(4,2,1,15,1,2500),(5,2,1,16,1,2500),(6,2,1,17,1,2500),(7,4,3,15,2,1195),(8,4,3,16,2,1435),(9,4,3,17,2,1675),(10,4,3,15,1,1195),(11,4,3,16,1,1435),(12,4,3,17,1,1675),(13,2,2,15,2,559),(14,2,2,16,2,738),(15,2,2,17,2,939),(16,2,2,15,1,518),(17,2,2,16,1,683),(18,2,2,17,1,870),(19,4,1,18,2,2700),(20,4,1,19,2,3000),(21,4,1,20,2,3000),(22,4,1,21,2,3200),(23,4,1,18,1,2700),(24,4,1,19,1,3000),(25,4,1,20,1,3000),(26,4,1,21,1,3200),(27,4,2,22,2,895),(28,4,2,23,2,1435),(29,4,2,22,1,895),(30,4,2,23,1,1435),(31,4,3,22,2,1195),(32,4,3,23,2,1435),(33,4,3,22,1,1195),(34,4,3,23,1,1435);
 /*!40000 ALTER TABLE `price_over_max_weights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,10 +260,10 @@ CREATE TABLE `prices` (
   `sender_city_id` bigint DEFAULT NULL,
   `price` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_prices_weight` (`weight_id`),
   KEY `fk_prices_region` (`region_id`),
   KEY `fk_prices_package_type` (`package_type_id`),
   KEY `fk_prices_sender_city` (`sender_city_id`),
+  KEY `fk_prices_weight` (`weight_id`),
   CONSTRAINT `fk_prices_package_type` FOREIGN KEY (`package_type_id`) REFERENCES `package_types` (`id`),
   CONSTRAINT `fk_prices_region` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`),
   CONSTRAINT `fk_prices_sender_city` FOREIGN KEY (`sender_city_id`) REFERENCES `sender_cities` (`id`),
@@ -283,6 +282,70 @@ INSERT INTO `prices` VALUES (1,2,1,1,2,2914),(2,2,2,1,2,2996),(3,2,3,1,2,3593),(
 UNLOCK TABLES;
 
 --
+-- Table structure for table `product_types`
+--
+
+DROP TABLE IF EXISTS `product_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_types` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `en_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `ro_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `gtip_code` bigint NOT NULL,
+  `item_code` bigint NOT NULL,
+  `weight` decimal(5,2) NOT NULL,
+  `warning` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_types`
+--
+
+LOCK TABLES `product_types` WRITE;
+/*!40000 ALTER TABLE `product_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `receivers`
+--
+
+DROP TABLE IF EXISTS `receivers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `receivers` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `company` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `full_address` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `description` text COLLATE utf8mb4_bin NOT NULL,
+  `country_id` bigint DEFAULT NULL,
+  `city_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_receivers_country` (`country_id`),
+  KEY `fk_receivers_city` (`city_id`),
+  CONSTRAINT `fk_receivers_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
+  CONSTRAINT `fk_receivers_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `receivers`
+--
+
+LOCK TABLES `receivers` WRITE;
+/*!40000 ALTER TABLE `receivers` DISABLE KEYS */;
+INSERT INTO `receivers` VALUES (1,'','','','','','',221,1),(2,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(3,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(4,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(6,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(7,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(8,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(9,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(10,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(11,'my company','Aleksey Alekseevich','Kishinev','474675234590','lasdjkf@lasdkjf.com','',221,1),(12,'adsfasdfasfas','lkasdjflkajsdlkfj','asdfasdfasdf','123321213','adsadsf@jadsf.com','',221,1),(13,'adsfasdfasfas','lkasdjflkajsdlkfj','asdfasdfasdf','123321213','adsadsf@jadsf.com','',221,1),(14,'adsfasdfasfas','lkasdjflkajsdlkfj','asdfasdfasdf','123321213','adsadsf@jadsf.com','',221,1),(15,'adsfasdfasfas','lkasdjflkajsdlkfj','asdfasdfasdf','123321213','adsadsf@jadsf.com','',221,1),(16,'adsfasdfasfas','lkasdjflkajsdlkfj','asdfasdfasdf','123321213','adsadsf@jadsf.com','',221,1),(17,'двлфыоалдфоыва','длфывоалыфдвао','фыдвлоалыфвоадф','1982347','kalsdjf@slakdjf.com','',221,1),(18,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(19,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(20,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(21,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(22,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(23,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(24,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(25,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(26,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(27,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(28,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(29,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(30,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(31,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(32,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(33,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(34,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(35,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(36,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(37,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(38,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(39,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(40,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(41,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(42,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(43,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(44,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(45,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(46,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(47,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(48,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(49,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(50,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(51,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(52,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(53,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(54,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(55,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(56,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(57,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(58,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(59,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(60,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(61,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(62,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(63,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(64,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(65,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(66,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(67,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(68,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(69,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(70,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(71,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(72,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(73,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(74,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(75,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(76,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(77,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(78,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(79,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(80,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(81,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(82,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(83,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(84,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(85,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(86,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(87,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(88,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(89,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(90,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(91,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(92,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(93,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(94,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(95,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(96,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(97,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(98,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(99,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(100,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(101,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(102,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(103,'ффлыдвоафвыаодл','фвыдаофдлыва','длфвыоадлфоыва','21341234','lkafas@lsakdjf.com','',221,1),(104,'laksdjflkajsldkf','lkasdjfaslkdf','lkafdjlkajsdkfjlkas','12345123451','lasdkfja2alsd@lsadkjf.com','',221,1),(105,'laksdjflkajsldkf','lkasdjfaslkdf','lkafdjlkajsdkfjlkas','12345123451','lasdkfja2alsd@lsadkjf.com','',221,1),(106,'laksdjflkajsldkf','lkasdjfaslkdf','lkafdjlkajsdkfjlkas','12345123451','lasdkfja2alsd@lsadkjf.com','',221,1),(107,'laksdjflkajsldkf','lkasdjfaslkdf','lkafdjlkajsdkfjlkas','12345123451','lasdkfja2alsd@lsadkjf.com','',221,1);
+/*!40000 ALTER TABLE `receivers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `regions`
 --
 
@@ -291,7 +354,7 @@ DROP TABLE IF EXISTS `regions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `regions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -315,8 +378,8 @@ DROP TABLE IF EXISTS `sender_cities`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sender_cities` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -340,8 +403,8 @@ DROP TABLE IF EXISTS `sender_regions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sender_regions` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `sender_city_id` bigint DEFAULT NULL,
   `price_for_door` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -358,6 +421,158 @@ LOCK TABLES `sender_regions` WRITE;
 /*!40000 ALTER TABLE `sender_regions` DISABLE KEYS */;
 INSERT INTO `sender_regions` VALUES (1,'Азиатская часть Стамбула','Istanbul\'un Asya yakası',1,2700),(2,'Европейская часть Стамбула','İstanbul\'un Avrupa yakası',1,1600),(3,'Анталия','Antalya',2,1100);
 /*!40000 ALTER TABLE `sender_regions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `senders`
+--
+
+DROP TABLE IF EXISTS `senders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `senders` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `full_address` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `receive_office` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `ikamet_id` varchar(20) COLLATE utf8mb4_bin NOT NULL,
+  `country_id` bigint DEFAULT NULL,
+  `sender_city_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_senders_country` (`country_id`),
+  KEY `fk_senders_sender_city` (`sender_city_id`),
+  CONSTRAINT `fk_senders_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
+  CONSTRAINT `fk_senders_sender_city` FOREIGN KEY (`sender_city_id`) REFERENCES `sender_cities` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `senders`
+--
+
+LOCK TABLES `senders` WRITE;
+/*!40000 ALTER TABLE `senders` DISABLE KEYS */;
+INSERT INTO `senders` VALUES (1,'','','','','','',NULL,1),(2,'Alex Kalak NEW','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(3,'Alex Kalak NEW','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(4,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(6,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(7,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(8,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(9,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(10,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(11,'Alex Kalak','Cazaclia','37367507188','alexkalak2006@gmail.com','posta','2342983749283749',NULL,1),(12,'alksdjflkasjdf','alksdfjlkasdjf','123321123','alskdjfkasdjf@lkdjs.ocm','lksadfjkasdf','2109342374',NULL,1),(13,'alksdjflkasjdf','alksdfjlkasdjf','123321123','alskdjfkasdjf@lkdjs.ocm','lksadfjkasdf','2109342374',NULL,1),(14,'alksdjflkasjdf','alksdfjlkasdjf','123321123','alskdjfkasdjf@lkdjs.ocm','lksadfjkasdf','2109342374',NULL,1),(15,'alksdjflkasjdf','alksdfjlkasdjf','123321123','alskdjfkasdjf@lkdjs.ocm','lksadfjkasdf','2109342374',NULL,1),(16,'alksdjflkasjdf','alksdfjlkasdjf','123321123','alskdjfkasdjf@lkdjs.ocm','lksadfjkasdf','2109342374',NULL,1),(17,'ASDJLKASJDLK','alsdjflkasdjf','lkdsajflkas','lkadjsfkasw@lsakdfj.com','lkadsjfasalsdkjf','234123424',NULL,1),(18,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(19,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(20,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(21,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(22,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(23,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(24,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(25,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(26,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(27,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(28,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(29,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(30,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(31,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(32,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(33,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(34,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(35,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(36,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(37,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(38,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(39,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(40,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(41,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(42,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(43,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(44,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(45,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(46,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(47,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(48,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(49,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(50,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(51,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(52,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(53,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(54,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(55,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(56,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(57,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(58,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(59,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(60,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(61,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(62,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(63,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(64,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(65,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(66,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(67,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(68,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(69,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(70,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(71,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(72,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(73,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(74,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(75,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(76,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(77,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(78,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(79,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(80,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(81,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(82,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(83,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(84,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(85,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(86,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(87,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(88,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(89,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(90,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(91,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(92,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(93,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(94,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(95,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(96,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(97,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(98,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(99,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(100,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(101,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(102,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(103,'asdfasdfdsaf','asdfasdfasdf','21341234','sadfasdf@sadfj.com','lakdsjflkasjdf','231874',NULL,1),(104,'adsfsadfas','dfasdfasdfsa','1231234','adsfasdfak@sajdlkf.com','lksajdflkjas','143412123',NULL,1),(105,'adsfsadfas','dfasdfasdfsa','1231234','adsfasdfak@sajdlkf.com','lksajdflkjas','143412123',NULL,1),(106,'adsfsadfas','dfasdfasdfsa','1231234','adsfasdfak@sajdlkf.com','lksajdflkjas','143412123',NULL,1),(107,'adsfsadfas','dfasdfasdfsa','1231234','adsfasdfak@sajdlkf.com','lksajdflkjas','143412123',NULL,1);
+/*!40000 ALTER TABLE `senders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipment_events`
+--
+
+DROP TABLE IF EXISTS `shipment_events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipment_events` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `shipment_id` bigint DEFAULT NULL,
+  `city_id` bigint DEFAULT NULL,
+  `place` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
+  `event` varchar(1000) COLLATE utf8mb4_bin NOT NULL,
+  `country_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_shipment_events_deleted_at` (`deleted_at`),
+  KEY `fk_shipment_events_city` (`city_id`),
+  KEY `fk_shipment_events_country` (`country_id`),
+  CONSTRAINT `fk_shipment_events_city` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
+  CONSTRAINT `fk_shipment_events_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipment_events`
+--
+
+LOCK TABLES `shipment_events` WRITE;
+/*!40000 ALTER TABLE `shipment_events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shipment_events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipment_items`
+--
+
+DROP TABLE IF EXISTS `shipment_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipment_items` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `shipment_id` bigint DEFAULT NULL,
+  `en_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `ro_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `tr_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `gtip_code` bigint NOT NULL,
+  `item_code` bigint NOT NULL,
+  `weight` decimal(5,2) NOT NULL,
+  `link` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `value_for_one` int NOT NULL,
+  `count` int NOT NULL,
+  `warning` tinyint(1) NOT NULL,
+  `total_price_try` bigint DEFAULT NULL,
+  `total_price_usd` bigint DEFAULT NULL,
+  `country_code_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_shipment_items_deleted_at` (`deleted_at`),
+  KEY `fk_shipment_items_country_code` (`country_code_id`),
+  CONSTRAINT `fk_shipment_items_country_code` FOREIGN KEY (`country_code_id`) REFERENCES `country_codes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipment_items`
+--
+
+LOCK TABLES `shipment_items` WRITE;
+/*!40000 ALTER TABLE `shipment_items` DISABLE KEYS */;
+INSERT INTO `shipment_items` VALUES (1,'2023-03-16 19:49:24.147','2023-03-16 19:49:24.147',NULL,2,'t-shirt','t-shirt','t-shirt',12332,213321,0.50,'http://localhost:3000',12,1,1,12,-9223372036854775808,224),(2,'2023-03-16 20:03:55.921','2023-03-16 20:03:55.921',NULL,2,'t-shirt','t-shirt','t-shirt',12332,213321,0.50,'http://localhost:3000',12,1,1,12,-9223372036854775808,224),(3,'2023-03-17 17:39:21.475','2023-03-17 17:39:21.475',NULL,2,'t-shirt','t-shirt','t-shirt',12332,213321,0.50,'http://localhost:3000',1200,1,1,1200,-9223372036854775808,224);
+/*!40000 ALTER TABLE `shipment_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipments`
+--
+
+DROP TABLE IF EXISTS `shipments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipments` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `trc` longtext COLLATE utf8mb4_bin,
+  `delivery_type_id` bigint DEFAULT NULL,
+  `price_usd` bigint DEFAULT NULL,
+  `price_try` bigint DEFAULT NULL,
+  `sender_id` bigint DEFAULT NULL,
+  `receiver_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_shipments_deleted_at` (`deleted_at`),
+  KEY `fk_shipments_delivery_type` (`delivery_type_id`),
+  KEY `fk_shipments_sender` (`sender_id`),
+  KEY `fk_shipments_receiver` (`receiver_id`),
+  CONSTRAINT `fk_shipments_delivery_type` FOREIGN KEY (`delivery_type_id`) REFERENCES `delivery_types` (`id`),
+  CONSTRAINT `fk_shipments_receiver` FOREIGN KEY (`receiver_id`) REFERENCES `receivers` (`id`),
+  CONSTRAINT `fk_shipments_sender` FOREIGN KEY (`sender_id`) REFERENCES `senders` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipments`
+--
+
+LOCK TABLES `shipments` WRITE;
+/*!40000 ALTER TABLE `shipments` DISABLE KEYS */;
+INSERT INTO `shipments` VALUES (1,'2023-03-15 19:16:39.455','2023-03-15 22:19:38.348',NULL,'',2,0,0,11,11),(2,'2023-03-15 19:59:22.390','2023-03-17 17:39:21.483',NULL,'',2,0,1224,2,2),(3,'2023-03-15 20:05:33.451','2023-03-16 17:40:13.419',NULL,'',2,0,0,3,3),(4,'2023-03-15 20:07:58.315','2023-03-15 20:07:58.315',NULL,'TRC745062',2,0,0,4,4),(5,'2023-03-18 15:13:01.808','2023-03-18 15:13:01.808',NULL,'TRC784328',1,0,0,12,12),(6,'2023-03-18 15:13:17.020','2023-03-18 15:13:17.020',NULL,'TRC677356',1,0,0,13,13),(7,'2023-03-18 15:13:23.009','2023-03-18 15:13:23.009',NULL,'TRC512809',1,0,0,14,14),(8,'2023-03-18 15:13:31.136','2023-03-18 15:13:31.136',NULL,'TRC149498',1,0,0,15,15),(9,'2023-03-18 15:15:08.429','2023-03-18 15:15:08.429',NULL,'TRC534987',1,0,0,16,16),(10,'2023-03-18 15:16:15.301','2023-03-18 15:16:15.301',NULL,'TRC567122',1,0,0,17,17),(11,'2023-03-18 16:08:38.208','2023-03-18 16:08:38.208',NULL,'TRC210418',2,0,0,18,18),(12,'2023-03-18 16:08:40.842','2023-03-18 16:08:40.842',NULL,'TRC795709',2,0,0,19,19),(13,'2023-03-18 16:08:41.176','2023-03-18 16:08:41.176',NULL,'TRC702719',2,0,0,20,20),(14,'2023-03-18 16:08:41.371','2023-03-18 16:08:41.371',NULL,'TRC15194',2,0,0,21,21),(15,'2023-03-18 16:08:41.499','2023-03-18 16:08:41.499',NULL,'TRC472526',2,0,0,22,22),(16,'2023-03-18 16:08:41.597','2023-03-18 16:08:41.597',NULL,'TRC510379',2,0,0,23,23),(17,'2023-03-18 16:08:42.170','2023-03-18 16:08:42.170',NULL,'TRC513198',2,0,0,24,24),(18,'2023-03-18 16:08:42.277','2023-03-18 16:08:42.277',NULL,'TRC774149',2,0,0,25,25),(19,'2023-03-18 16:08:42.415','2023-03-18 16:08:42.415',NULL,'TRC294362',2,0,0,26,26),(20,'2023-03-18 16:08:42.516','2023-03-18 16:08:42.516',NULL,'TRC602467',2,0,0,27,27),(21,'2023-03-18 16:08:42.613','2023-03-18 16:08:42.613',NULL,'TRC721116',2,0,0,28,28),(22,'2023-03-18 16:08:42.794','2023-03-18 16:08:42.794',NULL,'TRC598670',2,0,0,29,29),(23,'2023-03-18 16:08:42.861','2023-03-18 16:08:42.861',NULL,'TRC598499',2,0,0,30,30),(24,'2023-03-18 16:08:42.992','2023-03-18 16:08:42.992',NULL,'TRC856536',2,0,0,31,31),(25,'2023-03-18 16:08:43.103','2023-03-18 16:08:43.103',NULL,'TRC983517',2,0,0,32,32),(26,'2023-03-18 16:08:43.172','2023-03-18 16:08:43.172',NULL,'TRC958434',2,0,0,33,33),(27,'2023-03-18 16:08:43.306','2023-03-18 16:08:43.306',NULL,'TRC838447',2,0,0,34,34),(28,'2023-03-18 16:08:43.408','2023-03-18 16:08:43.408',NULL,'TRC770491',2,0,0,35,35),(29,'2023-03-18 16:08:43.524','2023-03-18 16:08:43.524',NULL,'TRC845723',2,0,0,36,36),(30,'2023-03-18 16:08:43.622','2023-03-18 16:08:43.622',NULL,'TRC604172',2,0,0,37,37),(31,'2023-03-18 16:08:43.731','2023-03-18 16:08:43.731',NULL,'TRC505317',2,0,0,38,38),(32,'2023-03-18 16:08:43.845','2023-03-18 16:08:43.845',NULL,'TRC128092',2,0,0,39,39),(33,'2023-03-18 16:08:43.962','2023-03-18 16:08:43.962',NULL,'TRC78340',2,0,0,40,40),(34,'2023-03-18 16:08:44.078','2023-03-18 16:08:44.078',NULL,'TRC742344',2,0,0,41,41),(35,'2023-03-18 16:08:44.222','2023-03-18 16:08:44.222',NULL,'TRC235870',2,0,0,42,42),(36,'2023-03-18 16:08:44.327','2023-03-18 16:08:44.327',NULL,'TRC502819',2,0,0,43,43),(37,'2023-03-18 16:08:44.411','2023-03-18 16:08:44.411',NULL,'TRC63599',2,0,0,44,44),(38,'2023-03-18 16:08:44.516','2023-03-18 16:08:44.516',NULL,'TRC377826',2,0,0,45,45),(39,'2023-03-18 16:08:44.630','2023-03-18 16:08:44.630',NULL,'TRC884455',2,0,0,46,46),(40,'2023-03-18 16:08:44.745','2023-03-18 16:08:44.745',NULL,'TRC13110',2,0,0,47,47),(41,'2023-03-18 16:08:44.853','2023-03-18 16:08:44.853',NULL,'TRC755399',2,0,0,48,48),(42,'2023-03-18 16:08:44.990','2023-03-18 16:08:44.990',NULL,'TRC68794',2,0,0,49,49),(43,'2023-03-18 16:08:45.077','2023-03-18 16:08:45.077',NULL,'TRC367018',2,0,0,50,50),(44,'2023-03-18 16:08:45.193','2023-03-18 16:08:45.193',NULL,'TRC541184',2,0,0,51,51),(45,'2023-03-18 16:08:45.364','2023-03-18 16:08:45.364',NULL,'TRC964832',2,0,0,52,52),(46,'2023-03-18 16:08:45.412','2023-03-18 16:08:45.412',NULL,'TRC375915',2,0,0,53,53),(47,'2023-03-18 16:08:45.585','2023-03-18 16:08:45.585',NULL,'TRC616328',2,0,0,54,54),(48,'2023-03-18 16:08:45.654','2023-03-18 16:08:45.654',NULL,'TRC567136',2,0,0,55,55),(49,'2023-03-18 16:08:45.778','2023-03-18 16:08:45.778',NULL,'TRC735141',2,0,0,56,56),(50,'2023-03-18 16:08:45.861','2023-03-18 16:08:45.861',NULL,'TRC237198',2,0,0,57,57),(51,'2023-03-18 16:08:46.005','2023-03-18 16:08:46.005',NULL,'TRC107423',2,0,0,58,58),(52,'2023-03-18 16:08:46.085','2023-03-18 16:08:46.085',NULL,'TRC644459',2,0,0,59,59),(53,'2023-03-18 16:08:46.197','2023-03-18 16:08:46.197',NULL,'TRC700613',2,0,0,60,60),(54,'2023-03-18 16:08:46.323','2023-03-18 16:08:46.323',NULL,'TRC315510',2,0,0,61,61),(55,'2023-03-18 16:08:46.432','2023-03-18 16:08:46.432',NULL,'TRC390055',2,0,0,62,62),(56,'2023-03-18 16:08:46.558','2023-03-18 16:08:46.558',NULL,'TRC751330',2,0,0,63,63),(57,'2023-03-18 16:08:46.656','2023-03-18 16:08:46.656',NULL,'TRC575679',2,0,0,64,64),(58,'2023-03-18 16:08:46.757','2023-03-18 16:08:46.757',NULL,'TRC41317',2,0,0,65,65),(59,'2023-03-18 16:08:46.870','2023-03-18 16:08:46.870',NULL,'TRC8596',2,0,0,66,66),(60,'2023-03-18 16:08:47.038','2023-03-18 16:08:47.038',NULL,'TRC365625',2,0,0,67,67),(61,'2023-03-18 16:08:47.110','2023-03-18 16:08:47.110',NULL,'TRC186286',2,0,0,68,68),(62,'2023-03-18 16:08:47.254','2023-03-18 16:08:47.254',NULL,'TRC442671',2,0,0,69,69),(63,'2023-03-18 16:08:47.324','2023-03-18 16:08:47.324',NULL,'TRC534867',2,0,0,70,70),(64,'2023-03-18 16:08:47.465','2023-03-18 16:08:47.465',NULL,'TRC312942',2,0,0,71,71),(65,'2023-03-18 16:08:47.561','2023-03-18 16:08:47.561',NULL,'TRC5183',2,0,0,72,72),(66,'2023-03-18 16:08:47.678','2023-03-18 16:08:47.678',NULL,'TRC299079',2,0,0,73,73),(67,'2023-03-18 16:08:47.798','2023-03-18 16:08:47.798',NULL,'TRC300608',2,0,0,74,74),(68,'2023-03-18 16:08:47.883','2023-03-18 16:08:47.883',NULL,'TRC899838',2,0,0,75,75),(69,'2023-03-18 16:08:48.017','2023-03-18 16:08:48.017',NULL,'TRC706203',2,0,0,76,76),(70,'2023-03-18 16:08:48.117','2023-03-18 16:08:48.117',NULL,'TRC946148',2,0,0,77,77),(71,'2023-03-18 16:08:48.219','2023-03-18 16:08:48.219',NULL,'TRC653449',2,0,0,78,78),(72,'2023-03-18 16:08:48.347','2023-03-18 16:08:48.347',NULL,'TRC128251',2,0,0,79,79),(73,'2023-03-18 16:08:48.436','2023-03-18 16:08:48.436',NULL,'TRC173198',2,0,0,80,80),(74,'2023-03-18 16:08:48.554','2023-03-18 16:08:48.554',NULL,'TRC344347',2,0,0,81,81),(75,'2023-03-18 16:08:48.680','2023-03-18 16:08:48.680',NULL,'TRC672581',2,0,0,82,82),(76,'2023-03-18 16:08:48.786','2023-03-18 16:08:48.786',NULL,'TRC905438',2,0,0,83,83),(77,'2023-03-18 16:08:48.892','2023-03-18 16:08:48.892',NULL,'TRC172725',2,0,0,84,84),(78,'2023-03-18 16:08:49.007','2023-03-18 16:08:49.007',NULL,'TRC385593',2,0,0,85,85),(79,'2023-03-18 16:08:49.127','2023-03-18 16:08:49.127',NULL,'TRC429160',2,0,0,86,86),(80,'2023-03-18 16:08:49.245','2023-03-18 16:08:49.245',NULL,'TRC605071',2,0,0,87,87),(81,'2023-03-18 16:08:49.333','2023-03-18 16:08:49.333',NULL,'TRC234428',2,0,0,88,88),(82,'2023-03-18 16:08:49.446','2023-03-18 16:08:49.446',NULL,'TRC510224',2,0,0,89,89),(83,'2023-03-18 16:08:49.555','2023-03-18 16:08:49.555',NULL,'TRC157072',2,0,0,90,90),(84,'2023-03-18 16:08:49.668','2023-03-18 16:08:49.668',NULL,'TRC332185',2,0,0,91,91),(85,'2023-03-18 16:08:49.805','2023-03-18 16:08:49.805',NULL,'TRC671942',2,0,0,92,92),(86,'2023-03-18 16:08:49.926','2023-03-18 16:08:49.926',NULL,'TRC48662',2,0,0,93,93),(87,'2023-03-18 16:08:50.037','2023-03-18 16:08:50.037',NULL,'TRC700996',2,0,0,94,94),(88,'2023-03-18 16:08:50.126','2023-03-18 16:08:50.126',NULL,'TRC520058',2,0,0,95,95),(89,'2023-03-18 16:08:50.260','2023-03-18 16:08:50.260',NULL,'TRC733561',2,0,0,96,96),(90,'2023-03-18 16:08:50.344','2023-03-18 16:08:50.344',NULL,'TRC742918',2,0,0,97,97),(91,'2023-03-18 16:08:50.451','2023-03-18 16:08:50.451',NULL,'TRC964614',2,0,0,98,98),(92,'2023-03-18 16:08:50.585','2023-03-18 16:08:50.585',NULL,'TRC141459',2,0,0,99,99),(93,'2023-03-18 16:08:50.699','2023-03-18 16:08:50.699',NULL,'TRC928496',2,0,0,100,100),(94,'2023-03-18 16:08:50.810','2023-03-18 16:08:50.810',NULL,'TRC163520',2,0,0,101,101),(95,'2023-03-18 16:08:50.915','2023-03-18 16:08:50.915',NULL,'TRC918797',2,0,0,102,102),(96,'2023-03-18 16:08:51.089','2023-03-18 16:08:51.089',NULL,'TRC75568',2,0,0,103,103),(97,'2023-03-18 16:16:13.678','2023-03-18 16:16:13.678',NULL,'TRC724531',2,0,0,104,104),(98,'2023-03-18 16:16:19.283','2023-03-18 16:16:19.283',NULL,'TRC156116',2,0,0,105,105),(99,'2023-03-18 16:16:45.347','2023-03-18 16:16:45.347',NULL,'TRC248730',2,0,0,106,106),(100,'2023-03-18 16:16:59.437','2023-03-18 16:16:59.437',NULL,'TRC954159',2,0,0,107,107);
+/*!40000 ALTER TABLE `shipments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -393,4 +608,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-13 23:56:20
+-- Dump completed on 2023-03-20 16:51:24
