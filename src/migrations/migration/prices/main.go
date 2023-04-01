@@ -2,21 +2,22 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"math"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/alexkalak/pony_express-calculator/src/db"
-	"github.com/alexkalak/pony_express-calculator/src/helpers/city_helper"
-	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/migration/src/db"
+	"github.com/alexkalak/migration/src/models"
 )
 
 // var length = 0
 
 func main() {
 	database := db.GetDB()
+	database.Migrator().DropTable("package_types")
 	database.Migrator().DropTable("prices")
 	database.Migrator().DropTable("weights")
 	database.Migrator().DropTable("`price_over_max_weights`")
@@ -24,75 +25,108 @@ func main() {
 	database.Migrator().AutoMigrate(&models.Weight{})
 	database.Migrator().AutoMigrate(&models.PriceOverMaxWeight{})
 
-	Istanbul, err := city_helper.GetSenderCityByName("Istanbul")
-	if err != nil {
-		panic(err)
+	var Istanbul = &models.SenderCity{}
+	var Antalya = &models.SenderCity{}
+
+	res := database.Find(Istanbul, "name = 'Стамбул'")
+	if res.Error != nil {
+		panic(res.Error)
 	}
-	Antalya, err := city_helper.GetSenderCityByName("Antalya")
-	if err != nil {
-		panic(err)
+	res = database.Find(Antalya, "name = 'Анталия'")
+	if res.Error != nil {
+		panic(res.Error)
 	}
 
+	AddPackageTypes()
 	MigrateWeights()
+
 	//Global regions
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/documents-AntalyaIstanbul.csv", "documents", Antalya, 1)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/documents-AntalyaIstanbul.csv", "documents", Istanbul, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/documents-AntalyaIstanbul.csv", "documents", Antalya, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/documents-AntalyaIstanbul.csv", "documents", Istanbul, 1)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "standart", Antalya, 1)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "standart", Istanbul, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "standart", Antalya, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "standart", Istanbul, 1)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "B2B", Antalya, 1)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "B2B", Istanbul, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "B2B", Antalya, 1)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/whole-world/B2B-B2C-AntalyaIstanbul.csv", "B2B", Istanbul, 1)
 
 	//Russia
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/documents-AntalyaIstanbul.csv", "documents", Antalya, 15)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/documents-AntalyaIstanbul.csv", "documents", Istanbul, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/documents-AntalyaIstanbul.csv", "documents", Antalya, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/documents-AntalyaIstanbul.csv", "documents", Istanbul, 15)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2C-Antalya.csv", "standart", Antalya, 15)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2C-Istanbul.csv", "standart", Istanbul, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2C-Antalya.csv", "standart", Antalya, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2C-Istanbul.csv", "standart", Istanbul, 15)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2B-Istanbul-Antalya.csv", "B2B", Antalya, 15)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2B-Istanbul-Antalya.csv", "B2B", Istanbul, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2B-Istanbul-Antalya.csv", "B2B", Antalya, 15)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2B-Istanbul-Antalya.csv", "B2B", Istanbul, 15)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/documents-AntalyaIstanbul-over-price.csv", "documents", Antalya, 15)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/documents-AntalyaIstanbul-over-price.csv", "documents", Istanbul, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/documents-AntalyaIstanbul-over-price.csv", "documents", Antalya, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/documents-AntalyaIstanbul-over-price.csv", "documents", Istanbul, 15)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2B-Istanbul-Antalya-over-price.csv", "B2B", Antalya, 15)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2B-Istanbul-Antalya-over-price.csv", "B2B", Istanbul, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2B-Istanbul-Antalya-over-price.csv", "B2B", Antalya, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2B-Istanbul-Antalya-over-price.csv", "B2B", Istanbul, 15)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2C-Antalya-over-price.csv", "standart", Antalya, 15)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/russia/prices/B2C-Istanbul-over-price.csv", "standart", Istanbul, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2C-Antalya-over-price.csv", "standart", Antalya, 15)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/russia/prices/B2C-Istanbul-over-price.csv", "standart", Istanbul, 15)
 
 	//Moldova
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/documents.csv", "documents", Antalya, 18)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/documents.csv", "documents", Istanbul, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/documents.csv", "documents", Antalya, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/documents.csv", "documents", Istanbul, 18)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/B2B-B2C.csv", "standart", Antalya, 18)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/B2B-B2C.csv", "standart", Istanbul, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/B2B-B2C.csv", "standart", Antalya, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/B2B-B2C.csv", "standart", Istanbul, 18)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/B2B-B2C.csv", "B2B", Antalya, 18)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/B2B-B2C.csv", "B2B", Istanbul, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/B2B-B2C.csv", "B2B", Antalya, 18)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/B2B-B2C.csv", "B2B", Istanbul, 18)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/documents-over-price.csv", "documents", Antalya, 18)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/moldova/prices/documents-over-price.csv", "documents", Istanbul, 18)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/documents-over-price.csv", "documents", Antalya, 18)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/moldova/prices/documents-over-price.csv", "documents", Istanbul, 18)
 
 	//Ukraine
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-documents.csv", "documents", Antalya, 22)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-documents.csv", "documents", Istanbul, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-documents.csv", "documents", Antalya, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-documents.csv", "documents", Istanbul, 22)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-standart-packages.csv", "standart", Antalya, 22)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-standart-packages.csv", "standart", Istanbul, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-standart-packages.csv", "standart", Antalya, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-standart-packages.csv", "standart", Istanbul, 22)
 
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-b2b.csv", "B2B", Antalya, 22)
-	AddPrices("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-b2b.csv", "B2B", Istanbul, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-b2b.csv", "B2B", Antalya, 22)
+	AddPrices("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-b2b.csv", "B2B", Istanbul, 22)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-standart-packages-over-price.csv", "standart", Antalya, 22)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-standart-packages-over-price.csv", "standart", Istanbul, 22)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-standart-packages-over-price.csv", "standart", Antalya, 22)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-standart-packages-over-price.csv", "standart", Istanbul, 22)
 
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-b2b-over-price.csv", "B2B", Antalya, 22)
-	AddPricesOverMaxWeights("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/ukraine-b2b-over-price.csv", "B2B", Istanbul, 22)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-b2b-over-price.csv", "B2B", Antalya, 22)
+	AddPricesOverMaxWeights("/home/alexkalak/Desktop/migration/csvtables/ukraine/ukraine-b2b-over-price.csv", "B2B", Istanbul, 22)
 
 	// fmt.Println(length)
+}
+
+func AddPackageTypes() {
+	database := db.GetDB()
+	documents := models.PackageType{
+		Name: "documents",
+	}
+	standart := models.PackageType{
+		Name: "standart",
+	}
+	B2B := models.PackageType{
+		Name: "B2B",
+	}
+
+	res := database.Create(&documents)
+	if res.Error != nil {
+		panic(res.Error)
+	}
+
+	res = database.Create(&standart)
+	if res.Error != nil {
+		panic(res.Error)
+	}
+
+	res = database.Create(&B2B)
+	if res.Error != nil {
+		panic(res.Error)
+	}
 }
 
 func AddPrices(path string, packageType string, senderCityFromDB *models.SenderCity, startRegionIndex int) {
@@ -122,6 +156,9 @@ func AddPrices(path string, packageType string, senderCityFromDB *models.SenderC
 			if err != nil {
 				fmt.Println(err)
 			}
+
+			str, _ := json.MarshalIndent(senderCityFromDB, "", "\t")
+			fmt.Println(string(str))
 
 			priceEntity := models.Price{
 				WeightID:      weightFromDB.ID,
@@ -176,6 +213,9 @@ func AddPricesOverMaxWeights(path string, packageType string, senderCityFromDB *
 				fmt.Println(err)
 			}
 
+			str, _ := json.MarshalIndent(senderCityFromDB, "", "\t")
+			fmt.Println(string(str))
+
 			priceEntity := models.PriceOverMaxWeight{
 				WeightID:      weightFromDB.ID,
 				PackageTypeID: packageTypeFromDB.ID,
@@ -206,14 +246,14 @@ func AddPricesOverMaxWeights(path string, packageType string, senderCityFromDB *
 // 	return price.ID != 0
 // }
 
-func isOverPriceInDB(weightID int, PackageTypeID int, regionID int) bool {
-	database := db.GetDB()
+// func isOverPriceInDB(weightID int, PackageTypeID int, regionID int) bool {
+// 	database := db.GetDB()
 
-	var overPrice models.PriceOverMaxWeight
-	database.Model(&models.PriceOverMaxWeight{}).Where("weight_id = ? AND package_type_id = ? AND region_id = ?", weightID, PackageTypeID, regionID).Find(&overPrice)
+// 	var overPrice models.PriceOverMaxWeight
+// 	database.Model(&models.PriceOverMaxWeight{}).Where("weight_id = ? AND package_type_id = ? AND region_id = ?", weightID, PackageTypeID, regionID).Find(&overPrice)
 
-	return overPrice.ID != 0
-}
+// 	return overPrice.ID != 0
+// }
 
 func MigrateWeights() {
 	database := db.GetDB()

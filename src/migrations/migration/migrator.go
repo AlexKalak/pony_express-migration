@@ -1,8 +1,8 @@
 package migration
 
 import (
-	"github.com/alexkalak/pony_express-calculator/src/db"
-	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/migration/src/db"
+	"github.com/alexkalak/migration/src/models"
 )
 
 func Migrate() {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/alexkalak/pony_express-calculator/src/db"
-	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/migration/src/db"
+	"github.com/alexkalak/migration/src/models"
 )
 
 func MigrateCities() {
@@ -84,7 +84,7 @@ func MigrateSenderCities() {
 
 // ///////////////////////////// Areas ///////////////////////////////////////////////////
 func MigrateRussiaAreas(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/country_cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/country_cities.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -99,7 +99,7 @@ func MigrateRussiaAreas(countryFromDB *models.Country) {
 }
 
 func MigrateMoldovaAreas(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/moldova/country_cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/moldova/country_cities.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -128,7 +128,7 @@ func SaveArea(id int, areaName string, trName string, countryFromDB *models.Coun
 
 // //////////////////////////// Districts ///////////////////////////////////////////
 func MigrateDistricts(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/districts.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/districts.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -162,8 +162,8 @@ func SaveDistrict(id int, districtName string, districtTrName string, areaID int
 
 // //////////////////////////// Cities and big and small ///////////////////////////////////////////
 func MigrateRussianCities(countryFromDB *models.Country) {
-	arrAllCities := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/city_places.csv")
-	arrBigCities := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/russia/cities/russia-big-cities.csv")
+	arrAllCities := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/city_places.csv")
+	arrBigCities := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/russia-big-cities.csv")
 
 	SaveIfNotExistCity("Москва", "Moskva", 15, countryFromDB, nil, nil)
 	SaveIfNotExistCity("Санкт-Петербург", "Sankt-Peterburg", 15, countryFromDB, nil, nil)
@@ -208,7 +208,7 @@ func MigrateRussianCities(countryFromDB *models.Country) {
 }
 
 func MigrateMoldovaCities(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/moldova/cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/moldova/cities.csv")
 
 	for _, entity := range arr {
 		l_reg_id, _ := strconv.Atoi(entity[1])
@@ -230,7 +230,7 @@ func MigrateMoldovaCities(countryFromDB *models.Country) {
 }
 
 func MigrateUkraineCities(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/ukraine/cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/ukraine/cities.csv")
 
 	for _, entity := range arr {
 		l_reg_id, _ := strconv.Atoi(entity[1])

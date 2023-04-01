@@ -3,12 +3,12 @@ package migration
 import (
 	"fmt"
 
-	"github.com/alexkalak/pony_express-calculator/src/db"
-	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/migration/src/db"
+	"github.com/alexkalak/migration/src/models"
 )
 
 func MigrateRegions() {
-	array := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/regions.csv")
+	array := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/regions.csv")
 
 	for _, entity := range array {
 		fmt.Println(entity)

@@ -3,13 +3,13 @@ package migration
 import (
 	"strconv"
 
-	"github.com/alexkalak/pony_express-calculator/src/db"
-	"github.com/alexkalak/pony_express-calculator/src/models"
+	"github.com/alexkalak/migration/src/db"
+	"github.com/alexkalak/migration/src/models"
 )
 
 func MigrateCountries() {
 	// database := db.GetDB()
-	array := ReadCSV("/home/alexkalak/Desktop/pony_express/csvtables/coutries.csv")
+	array := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/coutries.csv")
 
 	for _, entity := range array {
 		SaveIfNotExistsCountryCode(entity[1])
