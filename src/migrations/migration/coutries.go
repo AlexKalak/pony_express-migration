@@ -9,7 +9,7 @@ import (
 
 func MigrateCountries() {
 	// database := db.GetDB()
-	array := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/coutries.csv")
+	array := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/coutries.csv")
 
 	for _, entity := range array {
 		SaveIfNotExistsCountryCode(entity[1])

@@ -8,7 +8,7 @@ import (
 )
 
 func MigrateRegions() {
-	array := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/regions.csv")
+	array := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/regions.csv")
 
 	for _, entity := range array {
 		fmt.Println(entity)

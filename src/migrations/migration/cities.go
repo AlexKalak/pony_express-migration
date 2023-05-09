@@ -8,25 +8,38 @@ import (
 	"github.com/alexkalak/migration/src/models"
 )
 
+var wholeWorldRegionsStartIndex = 1
+var moldovaWorldRegionsStartIndex = 18
+var ukraineWorldRegionsStartIndex = 22
+var kazakhstanWorldRegionsStartIndex = 24
+
 func MigrateCities() {
 	database := db.GetDB()
 
 	var RussiaFromDB models.Country
 	var MoldovaFromDB models.Country
 	var UkraineFromDB models.Country
+	var KazakhstanFromDB models.Country
 	database.Find(&RussiaFromDB, "name = ?", "Россия")
 	database.Find(&MoldovaFromDB, "name = ?", "Молдова")
 	database.Find(&UkraineFromDB, "name = ?", "Украина")
+	database.Find(&KazakhstanFromDB, "name = ?", "Казахстан")
 
-	MigrateSenderCities()
+	MigrateSenderCitiesWithOffices()
 	MigrateSenderRegions()
+	MigrateSenderCities()
 
 	MigrateRussiaAreas(&RussiaFromDB)
-	MigrateMoldovaAreas(&MoldovaFromDB)
 	MigrateDistricts(&RussiaFromDB)
 	MigrateRussianCities(&RussiaFromDB)
+
+	MigrateMoldovaAreas(&MoldovaFromDB)
 	MigrateMoldovaCities(&MoldovaFromDB)
+
 	MigrateUkraineCities(&UkraineFromDB)
+
+	MigrateKazakhstanCities(&KazakhstanFromDB)
+
 }
 
 func MigrateSenderRegions() {
@@ -47,19 +60,16 @@ func MigrateSenderRegions() {
 		Name:         "Азиатская часть Стамбула",
 		TrName:       "Istanbul'un Asya yakası",
 		PriceForDoor: 2700,
-		SenderCity:   Istanbul,
 	}
 	EuropeIstanbulReg := models.SenderRegion{
 		Name:         "Европейская часть Стамбула",
 		TrName:       "İstanbul'un Avrupa yakası",
 		PriceForDoor: 1600,
-		SenderCity:   Istanbul,
 	}
 	AntalyaReg := models.SenderRegion{
-		Name:         "Анталия",
+		Name:         "Анталья",
 		TrName:       "Antalya",
 		PriceForDoor: 1100,
-		SenderCity:   Antalya,
 	}
 
 	database.Create(&AsianIstanbulReg)
@@ -67,14 +77,14 @@ func MigrateSenderRegions() {
 	database.Create(&AntalyaReg)
 }
 
-func MigrateSenderCities() {
+func MigrateSenderCitiesWithOffices() {
 	database := db.GetDB()
-	Istanbul := models.SenderCity{
+	Istanbul := models.SenderCityWithOffice{
 		Name:   "Стамбул",
 		TrName: "Istanbul",
 	}
-	Antalya := models.SenderCity{
-		Name:   "Анталия",
+	Antalya := models.SenderCityWithOffice{
+		Name:   "Анталья",
 		TrName: "Antalya",
 	}
 
@@ -82,9 +92,67 @@ func MigrateSenderCities() {
 	database.Create(&Antalya)
 }
 
+func MigrateSenderCities() {
+	database := db.GetDB()
+	records := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/sender-cities.csv")
+	for _, record := range records {
+		cityCode, err := strconv.Atoi(record[0])
+		if err != nil {
+			panic(err)
+		}
+		cityName := record[1]
+		cityWithOfficeName := record[2]
+		hasOffice, err := strconv.ParseBool(record[3])
+		if err != nil {
+			panic(err)
+		}
+
+		var cityWithOfficeFromDB = models.SenderCityWithOffice{}
+		res := database.Find(&cityWithOfficeFromDB, "tr_name = ?", cityWithOfficeName)
+		if res.Error != nil {
+			panic(res.Error)
+		}
+
+		senderCity := models.SenderCity{
+			Code:                 cityCode,
+			Name:                 cityName,
+			TrName:               cityName,
+			HasOffice:            hasOffice,
+			SenderCityWithOffice: cityWithOfficeFromDB,
+		}
+
+		if cityName == "Istanbul Anadolu" {
+			var senderRegion = models.SenderRegion{}
+			database.Find(&senderRegion, "name = ?", "Азиатская часть Стамбула")
+			if res.Error != nil {
+				panic(res.Error)
+			}
+			senderCity.SenderRegion = senderRegion
+		}
+		if cityName == "Istanbul Avrupa" {
+			var senderRegion = models.SenderRegion{}
+			database.Find(&senderRegion, "name = ?", "Европейская часть Стамбула")
+			if res.Error != nil {
+				panic(res.Error)
+			}
+			senderCity.SenderRegion = senderRegion
+		}
+		if cityName == "Antalya" {
+			senderRegion := models.SenderRegion{}
+			res := database.Find(&senderRegion, "name = ?", "Анталия")
+			if res.Error != nil {
+				panic(res.Error)
+			}
+			senderCity.SenderRegion = senderRegion
+		}
+
+		database.Create(&senderCity)
+	}
+}
+
 // ///////////////////////////// Areas ///////////////////////////////////////////////////
 func MigrateRussiaAreas(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/country_cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/russia/cities/country_cities.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -99,7 +167,7 @@ func MigrateRussiaAreas(countryFromDB *models.Country) {
 }
 
 func MigrateMoldovaAreas(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/moldova/country_cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/moldova/country_cities.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -128,7 +196,7 @@ func SaveArea(id int, areaName string, trName string, countryFromDB *models.Coun
 
 // //////////////////////////// Districts ///////////////////////////////////////////
 func MigrateDistricts(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/districts.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/russia/cities/districts.csv")
 
 	for _, entity := range arr {
 		id, err := strconv.Atoi(entity[0])
@@ -162,10 +230,10 @@ func SaveDistrict(id int, districtName string, districtTrName string, areaID int
 
 // //////////////////////////// Cities and big and small ///////////////////////////////////////////
 func MigrateRussianCities(countryFromDB *models.Country) {
-	arrAllCities := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/city_places.csv")
-	arrBigCities := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/russia/cities/russia-big-cities.csv")
+	arrAllCities := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/russia/cities/city_places.csv")
+	arrBigCities := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/russia/cities/russia-big-cities.csv")
 
-	SaveIfNotExistCity("Москва", "Moskva", 15, countryFromDB, nil, nil)
+	SaveIfNotExistCity("Москва", "Moskova", 15, countryFromDB, nil, nil)
 	SaveIfNotExistCity("Санкт-Петербург", "Sankt-Peterburg", 15, countryFromDB, nil, nil)
 
 	for _, entity := range arrAllCities {
@@ -208,11 +276,11 @@ func MigrateRussianCities(countryFromDB *models.Country) {
 }
 
 func MigrateMoldovaCities(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/moldova/cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/moldova/cities.csv")
 
 	for _, entity := range arr {
 		l_reg_id, _ := strconv.Atoi(entity[1])
-		regionID := l_reg_id + 17
+		regionID := l_reg_id + moldovaWorldRegionsStartIndex - 1
 		area_id, err := strconv.Atoi(entity[2])
 		if err != nil {
 			panic(err)
@@ -230,11 +298,24 @@ func MigrateMoldovaCities(countryFromDB *models.Country) {
 }
 
 func MigrateUkraineCities(countryFromDB *models.Country) {
-	arr := ReadCSV("/home/alexkalak/Desktop/migration/csvtables/ukraine/cities.csv")
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/ukraine/cities.csv")
 
 	for _, entity := range arr {
 		l_reg_id, _ := strconv.Atoi(entity[1])
-		regionID := l_reg_id + 21
+		regionID := l_reg_id + ukraineWorldRegionsStartIndex - 1
+
+		cityName := entity[0]
+		cityTrName := entity[2]
+
+		SaveIfNotExistCity(cityName, cityTrName, regionID, countryFromDB, nil, nil)
+	}
+}
+func MigrateKazakhstanCities(countryFromDB *models.Country) {
+	arr := ReadCSV("/home/alexkalak/Desktop/pony_express-migration/csvtables/kazakhstan/cities/cities.csv")
+
+	for _, entity := range arr {
+		l_reg_id, _ := strconv.Atoi(entity[1])
+		regionID := l_reg_id + kazakhstanWorldRegionsStartIndex - 1
 
 		cityName := entity[0]
 		cityTrName := entity[2]

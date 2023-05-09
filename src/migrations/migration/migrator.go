@@ -16,6 +16,7 @@ func Migrate() {
 	database.Migrator().DropTable("areas")
 	database.Migrator().DropTable("districts")
 	database.Migrator().DropTable("sender_cities")
+	database.Migrator().DropTable("sender_city_with_offices")
 	database.Migrator().DropTable("sender_regions")
 	database.Migrator().AutoMigrate(
 		&models.CountryCode{},
@@ -28,6 +29,7 @@ func Migrate() {
 		&models.SenderRegion{},
 	)
 
+	MigrateDeliveryTypes()
 	MigrateRegions()
 	MigrateCountries()
 	MigrateCities()

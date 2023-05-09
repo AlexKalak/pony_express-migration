@@ -35,11 +35,10 @@ func Init() *gorm.DB {
 		&models.CountryCode{},
 		&models.Country{},
 		&models.City{},
-		&models.Receiver{},
-		&models.Sender{},
 		&models.DeliveryType{},
 		&models.Region{},
 		&models.PackageType{},
+		&models.SenderCityWithOffice{},
 		&models.SenderCity{},
 		&models.SenderRegion{},
 	)
